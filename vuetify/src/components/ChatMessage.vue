@@ -1,16 +1,17 @@
 <template>
   <div class="chat-message">
     <div class="info">{{ username }} {{ datetime }}</div>
-    Hello, World!!!
+    {{ text }}
   </div>
 </template>
  
 <script>
 export default {
- name: "UserCard",
+ name: "ChatMessage",
  props: {
   username: String,
   datetime: String,
+  text: String,
  },
 };
 </script>

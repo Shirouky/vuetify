@@ -6,10 +6,10 @@
       </div>
     </div>
     <div class="chat-send-panel">
-      <input type="text" placeholder="Ваш никнейм..." class="chat-send-name-field" />
-      <input type="text" placeholder="Сообщение..." class="chat-send-message-field"/>
+      <input type="text" placeholder="Ваш никнейм..." class="chat-send-name-field" v-model="author" />
+      <input type="text" placeholder="Сообщение..." class="chat-send-message-field" v-model="text"/>
       <button>
-        <img src="/img/send.png" />
+        <img src="/img/send.png" @click="$emit('send-data', { text, author })"/>
       </button>
     </div>
   </div>
@@ -17,9 +17,11 @@
  
 <script>
 export default {
- name: "UserCard",
- props: {
- },
+ name: "ChatWindow",
+ data: () => ({
+     author: "",
+     text: "",
+ })
 };
 </script>
  

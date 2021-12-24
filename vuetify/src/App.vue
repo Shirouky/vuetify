@@ -1,8 +1,10 @@
 <template>
   <div id="app">
     <Container>
-      <ChatWindow>
-        <ChatMessage :username="username" :time="time">Hello, World!!!</ChatMessage>
+      <ChatWindow :text="text" :author="author" @send-data="sendMessage">
+        <div v-for="item in messages" :key="item.id">
+         <ChatMessage :author="item.author" :datetime="item.datetime" :text="item.text"></ChatMessage>
+        </div>
       </ChatWindow>
     </Container>
   </div>
@@ -20,10 +22,31 @@ export default {
     ChatMessage,
     ChatWindow
   },
+  mounted(){
+    setInterval(() => {
+      this.loadMessage();
+    }, 1000 * 60)
+  },
+  methods: {
+    loadMessage() {
+      this.axios.get('https://61bcd385d8542f0017824a2a.mockapi.io/messages')
+      .then((response) => {
+          this.messages = response.data;
+      })
+    },
+    sendMessage(data){
+      console.log("send-data", data)
+      this.axios.post('https://61bcd385d8542f0017824a2a.mockapi.io/messages', data)
+      .then((response) => {
+          this.messages = response.data;
+      })
+    }
+  },
   data() {
     return {
-      username: "Ivan",
-      time: "21.12.2019 05:00:50",
+      author: "",
+      text: "",
+      messages: [],
     };
   },
 }
